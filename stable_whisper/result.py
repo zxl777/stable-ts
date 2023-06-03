@@ -858,7 +858,8 @@ class WhisperResult:
             range(total_segments), total_segments // batch_size + 1
         )
         for batch in batches:
-            self._merge_segments(list(batch))
+            # Make sure indices in each batch are in descending order.
+            self._merge_segments(sorted(list(batch), reverse=True))
         return self
 
     def split_by_length(
